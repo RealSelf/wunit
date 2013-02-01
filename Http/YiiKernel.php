@@ -33,13 +33,17 @@ class YiiKernel implements HttpKernelInterface
 		}
 
 		$content = ob_get_contents();
-		ob_end_clean();
+		// ob_end_clean();
+
+        while (ob_get_level() > 1) {
+            ob_end_clean();
+        }
 
 		$headers = $this->getHeaders();
 		
 		$sessionId = session_id();
 		if(empty($sessionId)){
-			session_regenerate_id();
+			//session_regenerate_id();
 			$app->session->open();
 			
 		}
